@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ER:LC Cooldown Timer</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #74ebd5, #acb6e5);
+            color: #333;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 450px; /* Tăng chiều rộng container */
+            max-width: 90%;
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        .timer {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        .timer:hover {
+            background-color: #e9ecef;
+        }
+        .timer span {
+            font-weight: 600;
+            font-size: 18px;
+            color: #2c3e50;
+            display: inline-block;
+            width: 220px; /* Cố định chiều rộng phần trạng thái */
+            text-align: left; /* Căn trái để trông gọn gàng */
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .start-btn {
+            background-color: #1abc9c;
+            color: white;
+        }
+        .start-btn:hover:not(:disabled) {
+            background-color: #16a085;
+            transform: translateY(-2px);
+        }
+        .reset-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .reset-btn:hover:not(:disabled) {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        @media (max-width: 500px) {
+            .container {
+                padding: 20px;
+                width: 90%; /* Responsive cho màn hình nhỏ */
+            }
+            h1 {
+                font-size: 24px;
+            }
+            .timer span {
+                font-size: 16px;
+                width: 180px; /* Giảm chiều rộng trên màn hình nhỏ */
+            }
+            button {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ER:LC Cooldown Timer</h1>
+        <div class="timer">
+            <span>ATM: <span id="atm-status">Ready</span></span>
+            <div class="button-group">
+                <button id="atm-start" class="start-btn" onclick="startTimer('atm', 360)">Start</button>
+                <button id="atm-reset" class="reset-btn" onclick="resetTimer('atm')" disabled>Reset</button>
+            </div>
+        </div>
+        <div class="timer">
+            <span>Bank Robbery: <span id="bank-status">Ready</span></span>
+            <div class="button-group">
+                <button id="bank-start" class="start-btn" onclick="startTimer('bank', 420)">Start</button>
+                <button id="bank-reset" class="reset-btn" onclick="resetTimer('bank')" disabled>Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const timers = {
+            atm: { seconds: 0, interval: null },
+            bank: { seconds: 0, interval: null }
+        };
+
+        function startTimer(type, seconds) {
+            if (timers[type].seconds > 0) return;
+
+            timers[type].seconds = seconds;
+            const statusElement = document.getElementById(`${type}-status`);
+            const startButton = document.getElementById(`${type}-start`);
+            const resetButton = document.getElementById(`${type}-reset`);
+
+            startButton.disabled = true;
+            resetButton.disabled = false;
+
+            statusElement.textContent = `${timers[type].seconds} seconds remaining`;
+
+            timers[type].interval = setInterval(() => {
+                timers[type].seconds--;
+
+                if (timers[type].seconds <= 0) {
+                    clearInterval(timers[type].interval);
+                    timers[type].seconds = 0;
+                    statusElement.textContent = "Ready";
+                    startButton.disabled = false;
+                    resetButton.disabled = true;
+                } else {
+                    statusElement.textContent = `${timers[type].seconds} seconds remaining`;
+                }
+            }, 1000);
+        }
+
+        function resetTimer(type) {
+            if (timers[type].interval) {
+                clearInterval(timers[type].interval);
+            }
+
+            timers[type].seconds = 0;
+            const statusElement = document.getElementById(`${type}-status`);
+            const startButton = document.getElementById(`${type}-start`);
+            const resetButton = document.getElementById(`${type}-reset`);
+
+            statusElement.textContent = "Ready";
+            startButton.disabled = false;
+            resetButton.disabled = true;
+        }
+    </script>
+</body>
+</html>
