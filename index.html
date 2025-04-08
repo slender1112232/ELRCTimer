@@ -12,31 +12,31 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #121212; /* Nền đen đậm hiện đại */
-            color: #e0e0e0; /* Chữ trắng nhạt */
+            background-color: #121212;
+            color: #e0e0e0;
         }
         .container {
-            background-color: #1e1e1e; /* Xám đen cho container */
+            background-color: #1e1e1e;
             padding: 30px;
             border-radius: 20px;
-            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2); /* Bóng neon xanh */
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
             text-align: center;
             width: 450px;
             max-width: 90%;
-            border: 1px solid rgba(0, 255, 204, 0.3); /* Viền neon xanh */
+            border: 1px solid rgba(0, 255, 204, 0.3);
         }
         h1 {
             font-size: 28px;
             margin-bottom: 20px;
-            background: linear-gradient(90deg, #00ffcc, #ff4d94); /* Gradient neon xanh → hồng */
+            background: linear-gradient(90deg, #00ffcc, #ff4d94);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 10px rgba(0, 255, 204, 0.5); /* Hiệu ứng glow neon */
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
         }
         .timer {
             margin: 15px 0;
             padding: 15px;
-            background-color: #252525; /* Xám đen cho timer */
+            background-color: #252525;
             border-radius: 12px;
             display: flex;
             justify-content: space-between;
@@ -45,19 +45,19 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .timer:hover {
-            background-color: #2f2f2f; /* Xám sáng hơn khi hover */
-            border-color: rgba(0, 255, 204, 0.5); /* Viền neon khi hover */
+            background-color: #2f2f2f;
+            border-color: rgba(0, 255, 204, 0.5);
         }
         .timer span {
             font-weight: 500;
             font-size: 18px;
-            color: #b0b0b0; /* Xám sáng cho chữ */
+            color: #b0b0b0;
             display: inline-block;
             width: 220px;
             text-align: left;
         }
         .timer span span {
-            color: #00ffcc; /* Màu neon xanh cho trạng thái */
+            color: #00ffcc;
         }
         .button-group {
             display: flex;
@@ -73,25 +73,25 @@
             transition: all 0.3s ease;
         }
         .start-btn {
-            background-color: #00ffcc; /* Xanh neon */
-            color: #121212; /* Chữ đen cho tương phản */
+            background-color: #00ffcc;
+            color: #121212;
         }
         .start-btn:hover:not(:disabled) {
             background-color: #00e6b3;
-            box-shadow: 0 0 10px rgba(0, 255, 204, 0.5); /* Glow neon khi hover */
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
             transform: translateY(-2px);
         }
         .reset-btn {
-            background-color: #ff4d94; /* Hồng neon */
+            background-color: #ff4d94;
             color: #121212;
         }
         .reset-btn:hover:not(:disabled) {
             background-color: #e64485;
-            box-shadow: 0 0 10px rgba(255, 77, 148, 0.5); /* Glow neon khi hover */
+            box-shadow: 0 0 10px rgba(255, 77, 148, 0.5);
             transform: translateY(-2px);
         }
         button:disabled {
-            background-color: #444444; /* Xám đậm cho trạng thái disabled */
+            background-color: #444444;
             color: #888888;
             cursor: not-allowed;
             transform: none;
@@ -135,6 +135,9 @@
     </div>
 
     <script>
+        const atmSound = new Audio('/audio/ATM.mp3');
+        const bankSound = new Audio('/audio/Banks.mp3');
+
         const timers = {
             atm: { seconds: 0, interval: null },
             bank: { seconds: 0, interval: null }
@@ -162,6 +165,12 @@
                     statusElement.textContent = "Ready";
                     startButton.disabled = false;
                     resetButton.disabled = true;
+
+                    if (type === 'atm') {
+                        atmSound.play();
+                    } else if (type === 'bank') {
+                        bankSound.play();
+                    }
                 } else {
                     statusElement.textContent = `${timers[type].seconds} seconds remaining`;
                 }
