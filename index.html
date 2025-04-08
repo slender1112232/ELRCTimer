@@ -6,49 +6,58 @@
     <title>ER:LC Cooldown Timer</title>
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', 'Poppins', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            background: linear-gradient(135deg, #74ebd5, #acb6e5);
-            color: #333;
+            background-color: #121212; /* Nền đen đậm hiện đại */
+            color: #e0e0e0; /* Chữ trắng nhạt */
         }
         .container {
-            background-color: #fff;
+            background-color: #1e1e1e; /* Xám đen cho container */
             padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2); /* Bóng neon xanh */
             text-align: center;
-            width: 450px; /* Tăng chiều rộng container */
+            width: 450px;
             max-width: 90%;
+            border: 1px solid rgba(0, 255, 204, 0.3); /* Viền neon xanh */
         }
         h1 {
             font-size: 28px;
             margin-bottom: 20px;
-            color: #2c3e50;
+            background: linear-gradient(90deg, #00ffcc, #ff4d94); /* Gradient neon xanh → hồng */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.5); /* Hiệu ứng glow neon */
         }
         .timer {
             margin: 15px 0;
             padding: 15px;
-            background-color: #f9f9f9;
-            border-radius: 10px;
+            background-color: #252525; /* Xám đen cho timer */
+            border-radius: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .timer:hover {
-            background-color: #e9ecef;
+            background-color: #2f2f2f; /* Xám sáng hơn khi hover */
+            border-color: rgba(0, 255, 204, 0.5); /* Viền neon khi hover */
         }
         .timer span {
-            font-weight: 600;
+            font-weight: 500;
             font-size: 18px;
-            color: #2c3e50;
+            color: #b0b0b0; /* Xám sáng cho chữ */
             display: inline-block;
-            width: 220px; /* Cố định chiều rộng phần trạng thái */
-            text-align: left; /* Căn trái để trông gọn gàng */
+            width: 220px;
+            text-align: left;
+        }
+        .timer span span {
+            color: #00ffcc; /* Màu neon xanh cho trạng thái */
         }
         .button-group {
             display: flex;
@@ -59,42 +68,45 @@
             font-size: 14px;
             font-weight: 500;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
         }
         .start-btn {
-            background-color: #1abc9c;
-            color: white;
+            background-color: #00ffcc; /* Xanh neon */
+            color: #121212; /* Chữ đen cho tương phản */
         }
         .start-btn:hover:not(:disabled) {
-            background-color: #16a085;
+            background-color: #00e6b3;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.5); /* Glow neon khi hover */
             transform: translateY(-2px);
         }
         .reset-btn {
-            background-color: #e74c3c;
-            color: white;
+            background-color: #ff4d94; /* Hồng neon */
+            color: #121212;
         }
         .reset-btn:hover:not(:disabled) {
-            background-color: #c0392b;
+            background-color: #e64485;
+            box-shadow: 0 0 10px rgba(255, 77, 148, 0.5); /* Glow neon khi hover */
             transform: translateY(-2px);
         }
         button:disabled {
-            background-color: #cccccc;
+            background-color: #444444; /* Xám đậm cho trạng thái disabled */
+            color: #888888;
             cursor: not-allowed;
             transform: none;
         }
         @media (max-width: 500px) {
             .container {
                 padding: 20px;
-                width: 90%; /* Responsive cho màn hình nhỏ */
+                width: 90%;
             }
             h1 {
                 font-size: 24px;
             }
             .timer span {
                 font-size: 16px;
-                width: 180px; /* Giảm chiều rộng trên màn hình nhỏ */
+                width: 180px;
             }
             button {
                 padding: 6px 12px;
